@@ -34,10 +34,7 @@ class BuffyBot(commands.Cog):
         self.update_current_ep()
 
         if not self.current_ep:
-            embed = Embed(
-                title=f"I don't know where you're up to...💀",
-                description=f"Use the command '!save season episode' to record your progess so far",
-            )
+            embed = self.no_progress_embed()
         else:
             ep_summary = self.get_episode_summary(
                 self.current_ep["season"], self.current_ep["episode"]
@@ -56,6 +53,12 @@ class BuffyBot(commands.Cog):
         help="Responds with the episode you want to watch next",
     )
     async def next_episode(self, ctx):
+        if not self.current_ep:
+            self.update_current_ep()
+            if not self.current_ep:  # if still empty, we don't know where we are
+                embed = self.no_progress_embed()
+                await ctx.send(embed=embed)
+
         ep_summary = self.get_episode_summary(
             self.current_ep["season"], self.current_ep["episode"] + 1
         )
@@ -139,3 +142,9 @@ class BuffyBot(commands.Cog):
             self.current_ep = json.load(f)
         except FileNotFoundError as e:
             self.current_ep = {}
+    
+    def no_progress_embed(self):
+        return Embed(
+            title=f"I don't know where you're up to...💀",
+            description=f"Use the command '!save season episode' to record your progess so far"
+            )
