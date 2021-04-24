@@ -1,3 +1,6 @@
+#BuffyBot
+*.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 buffybot/__pycache__
