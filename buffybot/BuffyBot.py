@@ -8,9 +8,11 @@ from discord.ext import commands
 
 from dotenv import load_dotenv
 from tqdm import tqdm
+import json
 from time import sleep
 
 from buffybot.SeasonScraper.SeasonScraper import SeasonScraper
+from buffybot.utils import get_project_root
 
 
 class BuffyBot(commands.Cog):
@@ -20,12 +22,17 @@ class BuffyBot(commands.Cog):
         self.master_table = SeasonScraper().master_table
         self.total_eps = self.master_table.iloc[-1]["No.overall"]
         self.current_ep = {"season": 1, "episode": 1}
+        self.current_progress_fpath = os.path.join(
+            get_project_root(), "data", "progress.json"
+        )
 
     @commands.command(
         name="current_episode",
         help="Responds with the episode you are currently on",
     )
     async def current_episode(self, ctx):
+        self.update_current_ep()
+
         ep_summary = self.get_episode_summary(
             self.current_ep["season"], self.current_ep["episode"]
         )
@@ -74,11 +81,21 @@ class BuffyBot(commands.Cog):
 
     @commands.command(
         name="save",
-        help="Save your current progress. Saving your progress means that you JUST FINISHED the episode!",
+        help="Save your current progress. Saving your progress means that you will be JUST STARTING the episode next time!",
     )
     async def save_progress(self, ctx, season: int, episode: int):
+        ep_summary = self.get_episode_summary(season, episode)
 
-        await ctx.send(self.get_episode_summary(1, 1))
+        ep_json = {"season": season, "episode": episode}
+        with open(self.current_progress_fpath, "w") as f:
+            json.dump(ep_json, f)
+
+        embed = Embed(
+            title=f"You are watching season {ep_summary['Season Number'].iloc[0]}, episode {ep_summary['No. inseason'].iloc[0]}",
+            url=ep_summary["episode_url"].iloc[0],
+            description=f"You're watching {ep_summary['Title'].iloc[0]}...🦇",
+        )
+        await ctx.send(embed=embed)
 
     @commands.command(
         name="progress_buffy",
@@ -108,3 +125,7 @@ class BuffyBot(commands.Cog):
             (self.master_table["Season Number"] == season)
             & (self.master_table["No. inseason"] == episode)
         ]
+
+    def update_current_ep(self):
+        f = open(self.current_progress_fpath)
+        self.current_ep = json.load(f)
