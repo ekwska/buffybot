@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# bot.py
+# BuffyBot.py
 import os
 import random
 
@@ -21,7 +21,7 @@ class BuffyBot(commands.Cog):
         self._last_member = None
         self.master_table = SeasonScraper().master_table
         self.total_eps = self.master_table.iloc[-1]["No.overall"]
-        self.current_ep = {"season": 1, "episode": 1}
+        self.current_ep = {}
         self.current_progress_fpath = os.path.join(
             get_project_root(), "data", "progress.json"
         )
@@ -33,15 +33,21 @@ class BuffyBot(commands.Cog):
     async def current_episode(self, ctx):
         self.update_current_ep()
 
-        ep_summary = self.get_episode_summary(
-            self.current_ep["season"], self.current_ep["episode"]
-        )
+        if not self.current_ep:
+            embed = Embed(
+                title=f"I don't know where you're up to...💀",
+                description=f"Use the command '!save season episode' to record your progess so far",
+            )
+        else:
+            ep_summary = self.get_episode_summary(
+                self.current_ep["season"], self.current_ep["episode"]
+            )
 
-        embed = Embed(
-            title=f"You're watching, season {ep_summary['Season Number'].iloc[0]}, episode {ep_summary['No. inseason'].iloc[0]}",
-            url=ep_summary["episode_url"].iloc[0],
-            description=f"You are currently watching {ep_summary['Title'].iloc[0]}...🦇",
-        )
+            embed = Embed(
+                title=f"You're watching, season {ep_summary['Season Number'].iloc[0]}, episode {ep_summary['No. inseason'].iloc[0]}",
+                url=ep_summary["episode_url"].iloc[0],
+                description=f"You are currently watching {ep_summary['Title'].iloc[0]}...🦇",
+            )
 
         await ctx.send(embed=embed)
 
@@ -95,6 +101,7 @@ class BuffyBot(commands.Cog):
             url=ep_summary["episode_url"].iloc[0],
             description=f"You're watching {ep_summary['Title'].iloc[0]}...🦇",
         )
+        self.current_ep = {"season": season, "episode": episode}
         await ctx.send(embed=embed)
 
     @commands.command(
@@ -127,5 +134,8 @@ class BuffyBot(commands.Cog):
         ]
 
     def update_current_ep(self):
-        f = open(self.current_progress_fpath)
-        self.current_ep = json.load(f)
+        try:
+            f = open(self.current_progress_fpath)
+            self.current_ep = json.load(f)
+        except FileNotFoundError as e:
+            self.current_ep = {}
