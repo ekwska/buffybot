@@ -3,10 +3,10 @@
 import os
 import random
 
-from discord import Member
+from discord import Member, Embed
 from discord.ext import commands
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 from tqdm import tqdm
 from time import sleep
 
@@ -20,52 +20,63 @@ class BuffyBot(commands.Cog):
         self.master_table = SeasonScraper().master_table
 
     @commands.command(
-        name="current_episode", help="Responds with the episode you are currently on"
+        name="current_episode",
+        help="Responds with the episode you are currently on",
     )
     async def current_episode(self, ctx):
-        brooklyn_99_quotes = [
-            "I'm the human form of the 💯 emoji.",
-            "Bingpot!",
-            (
-                "Cool. Cool cool cool cool cool cool cool, "
-                "no doubt no doubt no doubt no doubt."
-            ),
-        ]
+        current_ep = {
+            "season": 2,
+            "episode": 5,
+        }  # so returns season 1 episode 2
+        ep_summary = self.get_episode_summary(
+            current_ep["season"], current_ep["episode"]
+        )
 
-        response = random.choice(brooklyn_99_quotes)
-        await ctx.send(response)
+        embed = Embed(
+            title=f"You're watching, season {ep_summary['Season Number'].iloc[0]}, episode {ep_summary['No. inseason'].iloc[0]}",
+            url=ep_summary["episode_url"].iloc[0],
+            description=f"You are currently watching '{ep_summary['Title'].iloc[0]}'...🦇",
+        )
 
-    @commands.command(
-        name="current_season", help="Responds with the season you are currently in"
-    )
-    async def current_seasom(self, ctx):
-        brooklyn_99_quotes = [
-            "I'm the human form of the 💯 emoji.",
-            "Bingpot!",
-            (
-                "Cool. Cool cool cool cool cool cool cool, "
-                "no doubt no doubt no doubt no doubt."
-            ),
-        ]
-
-        response = random.choice(brooklyn_99_quotes)
-        await ctx.send(response)
+        await ctx.send(embed=embed)
 
     @commands.command(
-        name="next_episode", help="Responds with the episode you want to watch next"
+        name="next_episode",
+        help="Responds with the episode you want to watch next",
     )
     async def next_episode(self, ctx):
-        brooklyn_99_quotes = [
-            "I'm the human form of the 💯 emoji.",
-            "Bingpot!",
-            (
-                "Cool. Cool cool cool cool cool cool cool, "
-                "no doubt no doubt no doubt no doubt."
-            ),
-        ]
+        last_ep_watched = {
+            "season": 2,
+            "episode": 5,
+        }  # so returns season 1 episode 2
+        ep_summary = self.get_episode_summary(
+            last_ep_watched["season"], last_ep_watched["episode"] + 1
+        )
+        embed = Embed(
+            title=f"None",
+            description=f"None",
+        )
+        if ep_summary.empty:
 
-        response = random.choice(brooklyn_99_quotes)
-        await ctx.send(response)
+            # A new season is starting!
+            ep_summary = self.get_episode_summary(
+                last_ep_watched["season"] + 1, 1
+            )
+
+            if ep_summary.empty:
+                # You finished buffy!
+                embed = Embed(
+                    title=f"🎉 You finished Buffy! Congratulations! 🎉",
+                    description=f"Start again...? 🦇",
+                )
+
+        embed = Embed(
+            title=f"Next up, season {ep_summary['Season Number'].iloc[0]}, episode {ep_summary['No. inseason'].iloc[0]}",
+            url=ep_summary["episode_url"].iloc[0],
+            description=f"Next you're watching '{ep_summary['Title'].iloc[0]}'...🦇",
+        )
+
+        await ctx.send(embed=embed)
 
     @commands.command(
         name="progress_season",
@@ -83,7 +94,8 @@ class BuffyBot(commands.Cog):
         bar = "=" * filled_len + "-" * (bar_len - filled_len)
 
         await ctx.send(
-            "[%s] %s%s through season %s%s\r" % (bar, percents, "%", season, status)
+            "[%s] %s%s through season %s%s\r"
+            % (bar, percents, "%", season, status)
         )
 
     @commands.command(
