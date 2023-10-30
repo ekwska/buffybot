@@ -111,6 +111,13 @@ class BuffyBot(commands.Cog):
         self.current_ep = {"season": season, "episode": episode}
         await ctx.send(embed=embed)
 
+    @save_progress.error
+    async def save_progress_error(self, ctx, error):
+        if isinstance(error, commands.HybridCommandError):
+            await ctx.send(
+                "Season or episode number is not valid. Check your arguments and try again."
+            )
+
     @commands.hybrid_command(
         name="buffy-progress",
         help="Responds with a progress bar showing how many episodes you have left in the Buffy marathon",
