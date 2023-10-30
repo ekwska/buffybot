@@ -115,7 +115,7 @@ class BuffyBot(commands.Cog):
     async def save_progress_error(self, ctx, error):
         if isinstance(error, commands.HybridCommandError):
             await ctx.send(
-                "Season or episode number is not valid. Check your arguments and try again."
+                "Season or episode number is not valid! 😱 Check your arguments and try again ✍️"
             )
 
     @commands.hybrid_command(
