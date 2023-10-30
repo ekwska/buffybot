@@ -9,10 +9,18 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from tqdm import tqdm
 import json
+import logging
 from time import sleep
 
 from buffybot.SeasonScraper.SeasonScraper import SeasonScraper
 from buffybot.utils import get_project_root
+
+logging.basicConfig(level=logging.INFO)
+
+
+async def setup(bot):
+    print("inside setup function")
+    await bot.add_cog(BuffyBot(bot))
 
 
 class BuffyBot(commands.Cog):
@@ -26,11 +34,12 @@ class BuffyBot(commands.Cog):
             get_project_root(), "data", "progress.json"
         )
 
-    @commands.command(
-        name="current_episode",
+    @commands.hybrid_command(
+        name="current",
         help="Responds with the episode you are currently on",
     )
     async def current_episode(self, ctx):
+        logging.info("current episode")
         self.update_current_ep()
 
         if not self.current_ep:
@@ -49,15 +58,14 @@ class BuffyBot(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.command(
-        name="next_episode",
+        name="next",
         help="Responds with the episode you want to watch next",
     )
     async def next_episode(self, ctx):
+        logging.info("next episode")
         if not self.current_ep:
             self.update_current_ep()
-            if (
-                not self.current_ep
-            ):  # if still empty, we don't know where we are
+            if not self.current_ep:  # if still empty, we don't know where we are
                 embed = self.no_progress_embed()
                 await ctx.send(embed=embed)
 
@@ -69,11 +77,8 @@ class BuffyBot(commands.Cog):
             description=f"None",
         )
         if ep_summary.empty:
-
             # A new season is starting!
-            ep_summary = self.get_episode_summary(
-                self.current_ep["season"] + 1, 1
-            )
+            ep_summary = self.get_episode_summary(self.current_ep["season"] + 1, 1)
 
             if ep_summary.empty:
                 # You finished buffy!
@@ -95,6 +100,7 @@ class BuffyBot(commands.Cog):
         help="Save your current progress. Saving your progress means that you will be JUST STARTING the episode next time!",
     )
     async def save_progress(self, ctx, season: int, episode: int):
+        logging.info("save episode")
         ep_summary = self.get_episode_summary(season, episode)
 
         ep_json = {"season": season, "episode": episode}
@@ -109,16 +115,15 @@ class BuffyBot(commands.Cog):
         self.current_ep = {"season": season, "episode": episode}
         await ctx.send(embed=embed)
 
-    @commands.command(
-        name="progress_buffy",
+    @commands.hybrid_command(
+        name="progress",
         help="Responds with a progress bar showing how many episodes you have left in the Buffy marathon",
     )
-    async def progress_buffy(self, ctx):
+    async def progress(self, ctx):
+        logging.info("progress")
         if not self.current_ep:
             self.update_current_ep()
-            if (
-                not self.current_ep
-            ):  # if still empty, we don't know where we are
+            if not self.current_ep:  # if still empty, we don't know where we are
                 embed = self.no_progress_embed()
                 await ctx.send(embed=embed)
 
@@ -141,6 +146,7 @@ class BuffyBot(commands.Cog):
         )
 
     def get_episode_summary(self, season: int, episode: int):
+        logging.info("episode summary")
         return self.master_table[
             (self.master_table["Season Number"] == season)
             & (self.master_table["No. inseason"] == episode)
