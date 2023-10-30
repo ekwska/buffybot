@@ -14,6 +14,8 @@
 <summary><strong>Click to expand contents</strong></summary>
 
 * [Functionality](#functionality)
+* [How to run BuffyBot locally](#running-locally)
+* [Support](#support)
 
 </details>
 
@@ -31,10 +33,46 @@
 - `/buffy-current`: Posts the season, episode number and title of the last saved episode with a link to the Wikipedia 
  page.
 
-## How to run BuffyBot locally
+## <a name="running-locally"></a>🏃 How to run BuffyBot locally
 
-tbc...
+> The bot can also be run locally on a device, which requires Python and Poetry to be installed. BuffyBot will only be 
+> online as long as the command is running, so if you turn your computer off or close the process, BuffyBot will go
+> offline too! However, this method is good for testing and experimentation if you don't want to faff around with 
+> Heroku 🦇
 
-## How to host BuffyBot on Heroku
+1. First, clone the repo using `git clone https://github.com/ekwska/buffybot`
+2. Next install the dev dependencies:
+* [Poetry](https://python-poetry.org/docs/#installation)
+* [Python 3.9](https://www.python.org/downloads/release/python-390/)
+2. Create a new [Discord Application](https://discordapp.com/developers/applications) in the `Discord Developer Portal`
+* Name your app (e.g `SpikeForever`) click the **Create App** button
+* Copy the apps **CLIENT ID** somewhere
+* Scroll down to the **Bot** section
+* Click the **Create a Bot User** button
+* Click the **Yes, do it!** button
+* Copy the bot's **TOKEN** somewhere
+3. Rename the file `.env.example` to `.env`, and replace the value of `DISCORD_TOKEN` with the bots **TOKEN** you copied
+ above.
+4. Now invite the bot to any server where you have admin privileges using the below link, making sure to replace 
+ **CLIENT_ID** with your client ID from above.
 
-tbc...
+```
+https://discord.com/api/oauth2/authorize?client_id=CLIENT_ID&permissions=2147552256&scope=bot
+```
+
+This will give the bot:
+
+- `bot` scope
+- `Read Messages`/`View Channels` permission
+- `Send Messages` permission
+- `Read Message History` permission
+- `Use Slash Commands` permission
+
+5. You should have a working `BuffyBot`! Test it out by saving your progress using:
+* `/buffy-save 1 1` to save that you are on the first episode.
+* `/buffy-progress` to show how far you are through Buffy.
+* `/buffy-next` to show you the title, season and episode number of the next episode (and a handy wikipedia link).
+
+# <a name="support"></a>🏥 Support
+
+If you run into any issues, please open a [Pull Request](https://github.com/ekwska/BuffyBot/pulls) 🐛
