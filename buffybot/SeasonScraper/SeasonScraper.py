@@ -6,9 +6,6 @@ import pandas as pd
 import os
 import logging
 from buffybot.utils import get_project_root
-from discord.utils import setup_logging
-
-setup_logging(level=logging.INFO, root=True)
 
 
 class SeasonScraper:

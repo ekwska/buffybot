@@ -10,10 +10,6 @@ import json
 from buffybot.SeasonScraper.SeasonScraper import SeasonScraper
 from buffybot.utils import get_project_root
 
-from discord.utils import setup_logging
-
-setup_logging(level=logging.INFO, root=True)
-
 
 async def setup(bot):
     await bot.add_cog(BuffyBot(bot))
