@@ -1,4 +1,4 @@
-# BuffyBot
+<h1 align="center">🦇 BuffyBot 🧛‍♀️</h1>
 
 ---
 
