@@ -5,8 +5,8 @@ description = ""
 authors = ["ekwska <ekwiecinska55@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-"discord.py" = "*"
+python = "^3.9"
+"discord.py" = "^2.0.0"
 python-dotenv = "*"
 beautifulsoup4 = "*"
 requests = "*"
@@ -22,3 +22,6 @@ pytest = "^5.2"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+buffybot = "buffybot.bot:main"
