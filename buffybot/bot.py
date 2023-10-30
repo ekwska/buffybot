@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 from buffybot.BuffyBot import BuffyBot
 
-logging.basicConfig(level=logging.INFO)
+discord.utils.setup_logging(level=logging.INFO, root=True)
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")

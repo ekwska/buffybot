@@ -4,14 +4,15 @@ import os
 
 from discord import Embed
 from discord.ext import commands
-
-import json
 import logging
+import json
 
 from buffybot.SeasonScraper.SeasonScraper import SeasonScraper
 from buffybot.utils import get_project_root
 
-logging.basicConfig(level=logging.INFO)
+from discord.utils import setup_logging
+
+setup_logging(level=logging.INFO, root=True)
 
 
 async def setup(bot):
@@ -34,7 +35,7 @@ class BuffyBot(commands.Cog):
         help="Responds with the episode you are currently on",
     )
     async def current_episode(self, ctx):
-        logging.info("current episode")
+        logging.info("Displaying current episode")
         self.update_current_ep()
 
         if not self.current_ep:
@@ -57,7 +58,7 @@ class BuffyBot(commands.Cog):
         help="Responds with the episode you want to watch next",
     )
     async def next_episode(self, ctx):
-        logging.info("next episode")
+        logging.info("Displaying next episode")
         if not self.current_ep:
             self.update_current_ep()
             if not self.current_ep:  # if still empty, we don't know where we are
@@ -95,7 +96,7 @@ class BuffyBot(commands.Cog):
         help="Save the episode you just finished!",
     )
     async def save_progress(self, ctx, season: int, episode: int):
-        logging.info("save episode")
+        logging.info("Displaying current episode")
         ep_summary = self.get_episode_summary(season, episode)
 
         ep_json = {"season": season, "episode": episode}
@@ -122,7 +123,7 @@ class BuffyBot(commands.Cog):
         help="Responds with a progress bar showing how many episodes you have left in the Buffy marathon",
     )
     async def progress(self, ctx):
-        logging.info("progress")
+        logging.info("Displaying current progress through buffy")
         if not self.current_ep:
             self.update_current_ep()
             if not self.current_ep:  # if still empty, we don't know where we are
@@ -148,7 +149,7 @@ class BuffyBot(commands.Cog):
         )
 
     def get_episode_summary(self, season: int, episode: int):
-        logging.info("episode summary")
+        logging.debug("Displaying episode summary")
         return self.main_table[
             (self.main_table["Season Number"] == season)
             & (self.main_table["No. inseason"] == episode)
