@@ -4,7 +4,10 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import pandas as pd
 import os
+import logging
 from buffybot.utils import get_project_root
+
+logging.basicConfig(level=logging.INFO)
 
 
 class SeasonScraper:
@@ -23,11 +26,11 @@ class SeasonScraper:
         return master_table
 
     def load_master_table(self) -> pd.DataFrame:
-        print("Master table exists, loading!")
+        logging.info("Master table exists, loading!")
         return pd.read_csv(self.master_table_fpath)
 
     def generate_master_table(self) -> pd.DataFrame:
-        print("Master table does not exist, generating!")
+        logging.info("Master table does not exist, generating!")
         url = "https://en.wikipedia.org/wiki/List_of_Buffy_the_Vampire_Slayer_episodes"
         html = urlopen(url)
 
@@ -107,4 +110,4 @@ class SeasonScraper:
 
 if __name__ == "__main__":
     test = SeasonScraper()
-    print(test.master_table)
+    logging.info(test.master_table)
