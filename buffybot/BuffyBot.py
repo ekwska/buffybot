@@ -31,7 +31,7 @@ class BuffyBot(commands.Cog):
         )
 
     @commands.hybrid_command(
-        name="current",
+        name="buffy-current",
         help="Responds with the episode you are currently on",
     )
     async def current_episode(self, ctx):
@@ -53,8 +53,8 @@ class BuffyBot(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command(
-        name="next",
+    @commands.hybrid_command(
+        name="buffy-next",
         help="Responds with the episode you want to watch next",
     )
     async def next_episode(self, ctx):
@@ -91,9 +91,9 @@ class BuffyBot(commands.Cog):
 
         await ctx.send(embed=embed)
 
-    @commands.command(
-        name="save",
-        help="Save your current progress. Saving your progress means that you will be JUST STARTING the episode next time!",
+    @commands.hybrid_command(
+        name="buffy-save",
+        help="Save the episode you just finished!",
     )
     async def save_progress(self, ctx, season: int, episode: int):
         logging.info("save episode")
@@ -112,7 +112,7 @@ class BuffyBot(commands.Cog):
         await ctx.send(embed=embed)
 
     @commands.hybrid_command(
-        name="progress",
+        name="buffy-progress",
         help="Responds with a progress bar showing how many episodes you have left in the Buffy marathon",
     )
     async def progress(self, ctx):
