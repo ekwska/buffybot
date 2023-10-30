@@ -3,14 +3,11 @@
 import os
 import random
 
-from discord import Member, Embed
+from discord import Embed
 from discord.ext import commands
 
-from dotenv import load_dotenv
-from tqdm import tqdm
 import json
 import logging
-from time import sleep
 
 from buffybot.SeasonScraper.SeasonScraper import SeasonScraper
 from buffybot.utils import get_project_root
