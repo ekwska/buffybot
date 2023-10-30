@@ -47,11 +47,11 @@
 * [Python 3.9](https://www.python.org/downloads/release/python-390/)
 2. Create a new [Discord Application](https://discordapp.com/developers/applications) in the `Discord Developer Portal`
 * Name your app (e.g `SpikeForever`) click the **Create App** button
-* Copy the apps **CLIENT ID** somewhere
-* Scroll down to the **Bot** section
-* Click the **Create a Bot User** button
-* Click the **Yes, do it!** button
-* Copy the bot's **TOKEN** somewhere
+* Copy the apps **CLIENT ID** (it is called **APPLICATION ID** in discord) somewhere
+* Click on the **Bot** section in the sidebar
+-- UNCHECK **Public bot**, unless you want it to be public
+-- CHECK **Message Content Intent**, this is critical for the apps functionality
+* Copy the bot's **TOKEN** somewhere. If you forget it, you will need to regenerate it.
 3. Rename the file `.env.example` to `.env`, and replace the value of `DISCORD_TOKEN` with the bots **TOKEN** you copied
  above.
 4. Now invite the bot to any server where you have admin privileges using the below link, making sure to replace 
@@ -71,7 +71,8 @@ This will give the bot:
 
 5. Open a terminal and navigate to the `buffybot` folder using `cd buffybot`
 6. Run `poetry install`
-7. Run `poetry run buffybot`, and you should see something like so (the bots Discord `#` identifier will be different):
+7. Run `poetry run buffybot`, and you should see something like so (the bots Discord name and `#` identifier will be
+ different depending on what you named the bot):
 
 ```bash
 $ $ poetry run buffybot
@@ -90,10 +91,14 @@ RuntimeWarning: Enable tracemalloc to get the object allocation traceback
 2023-10-30 16:15:42 INFO     root BuffyBot#3743 has loaded the BuffyBot extension!
 ```
 
-5. You should have a working `BuffyBot`! Test it out by saving your progress using:
+5. You should have a working `BuffyBot`! Test it out in your server by using:
 * `/buffy-save 1 1` to save that you are on the first episode.
-* `/buffy-progress` to show how far you are through Buffy.
-* `/buffy-next` to show you the title, season and episode number of the next episode (and a handy wikipedia link).
+* Then `/buffy-progress` to show how far you are through Buffy.
+* And then `/buffy-next` to show you the title, season and episode number of the next episode (and a handy wikipedia link).
+
+You're now ready to slay some vampires and ~~destroy~~ pass high school, have fun! 🩸
+
+<div align="center"><img src="img/buffy-ready.gif"></div>
 
 ------
 # <a name="support"></a>🏥 Support
