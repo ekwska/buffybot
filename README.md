@@ -99,3 +99,7 @@ RuntimeWarning: Enable tracemalloc to get the object allocation traceback
 # <a name="support"></a>🏥 Support
 
 If you run into any issues, please open a [Pull Request](https://github.com/ekwska/BuffyBot/pulls) 🐛
+
+------
+
+Doc formatting and setup instructions inspired by [RiTA-DiscordBot](https://github.com/Maddious/RiTA-DiscordBot) ❤️
