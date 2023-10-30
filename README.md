@@ -1,12 +1,14 @@
 <h1 align="center">🦇 BuffyBot 🧛‍♀️</h1>
 
----
+------
 
 <div align="center"><img src="img/popcorn.gif"></div>
 
 <div align="center"><i>"If the apocalypse comes, beep me"</i></div>
 
----
+------
+
+<div align="center"><b>A Discord bot for keeping track of your place during Buffy The Vampire Slayer marathons</b> 🧛‍♀️ </div>
 
 ## 📖 Table of Contents
 
@@ -20,8 +22,6 @@
 </details>
 
 ------
-
-
 ## <a name="functionality"></a>🖥️ Functionality
 
 `BuffyBot` uses slash commands, the available ones are
@@ -33,6 +33,7 @@
 - `/buffy-current`: Posts the season, episode number and title of the last saved episode with a link to the Wikipedia 
  page.
 
+------
 ## <a name="running-locally"></a>🏃 How to run BuffyBot locally
 
 > The bot can also be run locally on a device, which requires Python and Poetry to be installed. BuffyBot will only be 
@@ -94,6 +95,7 @@ RuntimeWarning: Enable tracemalloc to get the object allocation traceback
 * `/buffy-progress` to show how far you are through Buffy.
 * `/buffy-next` to show you the title, season and episode number of the next episode (and a handy wikipedia link).
 
+------
 # <a name="support"></a>🏥 Support
 
 If you run into any issues, please open a [Pull Request](https://github.com/ekwska/BuffyBot/pulls) 🐛
