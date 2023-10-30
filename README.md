@@ -73,22 +73,33 @@ This will give the bot:
 7. Run `poetry run buffybot`, and you should see something like:
 
 ```bash
-$ poetry run buffybot
-WARNING:discord.state:Guilds intent seems to be disabled. This may cause state related issues.
-WARNING:discord.client:PyNaCl is not installed, voice will NOT be supported
-Master table exists, loading!
-/home/bird/Documents/src/buffybot/buffybot/bot.py:17: RuntimeWarning: coroutine 'BotBase.add_cog' was never awaited
+$ $ poetry run buffybot
+2023-10-30 16:08:48 WARNING  discord.state Guilds intent seems to be disabled. This may cause state related issues.
+2023-10-30 16:08:48 WARNING  discord.state Guilds intent seems to be disabled. This may cause state related issues.
+2023-10-30 16:08:48 WARNING  discord.state Guilds intent seems to be disabled. This may cause state related issues.
+2023-10-30 16:08:48 WARNING  discord.client PyNaCl is not installed, voice will NOT be supported
+2023-10-30 16:08:48 WARNING  discord.client PyNaCl is not installed, voice will NOT be supported
+2023-10-30 16:08:48 WARNING  discord.client PyNaCl is not installed, voice will NOT be supported
+2023-10-30 16:08:48 INFO     root Main table of seasons/episodes exists, loading!
+/home/bird/Documents/src/buffybot/buffybot/bot.py:20: RuntimeWarning: coroutine 'BotBase.add_cog' was never awaited
   bot.add_cog(BuffyBot(bot))
 RuntimeWarning: Enable tracemalloc to get the object allocation traceback
-2023-10-30 15:55:42 INFO     discord.client logging in using static token
-INFO:discord.client:logging in using static token
-2023-10-30 15:55:43 INFO     discord.gateway Shard ID None has connected to Gateway (Session ID: ddbd4a88030eb22572f161004e9f4e51).
-INFO:discord.gateway:Shard ID None has connected to Gateway (Session ID: ddbd4a88030eb22572f161004e9f4e51).
-BuffyBot#3743 has connected to Discord! Version 2.3.2
-Master table exists, loading!
-BuffyBot#3743 has loaded the BuffyBot extension!
-Synced 4 commands.
+2023-10-30 16:08:48 INFO     discord.client logging in using static token
+2023-10-30 16:08:48 INFO     discord.client logging in using static token
+2023-10-30 16:08:48 INFO     discord.client logging in using static token
+2023-10-30 16:08:48 INFO     discord.client logging in using static token
+2023-10-30 16:08:49 INFO     discord.gateway Shard ID None has connected to Gateway (Session ID: 19bba21e56a654407ace569dafbe8927).
+2023-10-30 16:08:49 INFO     discord.gateway Shard ID None has connected to Gateway (Session ID: 19bba21e56a654407ace569dafbe8927).
+2023-10-30 16:08:49 INFO     discord.gateway Shard ID None has connected to Gateway (Session ID: 19bba21e56a654407ace569dafbe8927).
+2023-10-30 16:08:49 INFO     discord.gateway Shard ID None has connected to Gateway (Session ID: 19bba21e56a654407ace569dafbe8927).
+2023-10-30 16:08:51 INFO     root BuffyBot#3743 has connected to Discord! Version 2.3.2
+2023-10-30 16:08:51 INFO     root Main table of seasons/episodes exists, loading!
+2023-10-30 16:08:51 INFO     root Main table of seasons/episodes exists, loading!
+2023-10-30 16:08:51 INFO     root BuffyBot#3743 has loaded the BuffyBot extension!
+2023-10-30 16:08:51 INFO     root BuffyBot#3743 has loaded the BuffyBot extension!
 ```
+
+> Note: I am currently working on fixing the double logging issue 😅
 
 5. You should have a working `BuffyBot`! Test it out by saving your progress using:
 * `/buffy-save 1 1` to save that you are on the first episode.
