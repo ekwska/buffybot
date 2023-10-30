@@ -15,7 +15,6 @@ logging.basicConfig(level=logging.INFO)
 
 
 async def setup(bot):
-    print("inside setup function")
     await bot.add_cog(BuffyBot(bot))
 
 
