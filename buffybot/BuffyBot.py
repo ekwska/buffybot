@@ -22,8 +22,8 @@ class BuffyBot(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self._last_member = None
-        self.master_table = SeasonScraper().master_table
-        self.total_eps = self.master_table.iloc[-1]["No.overall"]
+        self.main_table = SeasonScraper().main_table
+        self.total_eps = self.main_table.iloc[-1]["No.overall"]
         self.current_ep = {}
         self.current_progress_fpath = os.path.join(
             get_project_root(), "data", "progress.json"
@@ -149,9 +149,9 @@ class BuffyBot(commands.Cog):
 
     def get_episode_summary(self, season: int, episode: int):
         logging.info("episode summary")
-        return self.master_table[
-            (self.master_table["Season Number"] == season)
-            & (self.master_table["No. inseason"] == episode)
+        return self.main_table[
+            (self.main_table["Season Number"] == season)
+            & (self.main_table["No. inseason"] == episode)
         ]
 
     def update_current_ep(self):
