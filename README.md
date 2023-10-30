@@ -70,7 +70,7 @@ This will give the bot:
 
 5. Open a terminal and navigate to the `buffybot` folder using `cd buffybot`
 6. Run `poetry install`
-7. Run `poetry run buffybot`, and you should see something like:
+7. Run `poetry run buffybot`, and you should see something like so (the bots Discord `#` identifier will be different):
 
 ```bash
 $ $ poetry run buffybot
