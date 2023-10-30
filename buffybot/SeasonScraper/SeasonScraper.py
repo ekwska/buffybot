@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 # SeasonScraper.py
-import requests
-import urllib.request
-import time
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 import pandas as pd
